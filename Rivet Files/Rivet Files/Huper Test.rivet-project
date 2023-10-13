@@ -1,0 +1,443 @@
+version: 4
+data:
+  attachedData:
+    trivet:
+      testSuites: []
+      version: 1
+  graphs:
+    3j0jb5q7wEL7JRk6wxZP1:
+      metadata:
+        description: ""
+        id: 3j0jb5q7wEL7JRk6wxZP1
+        name: Initialize Chat
+      nodes:
+        '[5rAU-RUMuB-2MEHfR8-pG]:userInput "User Input"':
+          data:
+            prompt: ""
+            useInput: true
+          outgoingConnections:
+            - questionsAndAnswers->"Graph Output" hzZQzbDgasGkfIp1QHYgG/value
+          visualData: 2100.127355010405/320.9526408929316/280/78
+        '[A3LyOdTXFfXWIfhhQYOnD]:text "Text"':
+          data:
+            text: "Your name is Ah Fu\r
+
+              You are a customer service agent\r
+
+              You are working for Huper Express\r
+
+              Huper Express is a local courier company in
+              Singapore\r
+
+              Huper Express does door to door deliveries\r
+
+              You are to help customers which their deliver"
+          outgoingConnections:
+            - output->"Assemble Prompt" _48waq6f0i-p-WKfX9Ilx/message1
+          visualData: 506.22357801348255/184.13623087767792/330/87
+        '[FR-KkpIKmScuYHSefRHvn]:text "Text"':
+          data:
+            text: "{{input}}"
+          outgoingConnections:
+            - output->"User Input" 5rAU-RUMuB-2MEHfR8-pG/questions
+          visualData: 1623.0855923452968/312.2657919373458/330/68
+        '[THpmo2BsdOfS05Gi3f9KL]:chat "Chat"':
+          data:
+            cache: false
+            enableFunctionUse: false
+            endpoint: ""
+            frequencyPenalty: 0
+            maxTokens: 1024
+            model: gpt-3.5-turbo
+            overrideModel: ""
+            presencePenalty: 0
+            stop: ""
+            temperature: 0.5
+            top_p: 1
+            useAsGraphPartialOutput: true
+            useFrequencyPenaltyInput: false
+            useMaxTokensInput: false
+            useModelInput: false
+            usePresencePenaltyInput: false
+            useStop: false
+            useStopInput: false
+            useTemperatureInput: false
+            useTopP: false
+            useTopPInput: false
+            useUseTopPInput: false
+            useUserInput: false
+          outgoingConnections:
+            - response->"Text" FR-KkpIKmScuYHSefRHvn/input
+          visualData: 1249.2129457148487/64.04584698533905/230/95
+        '[X1zbE3UkJZWks8yMJW0vd]:loadDataset "Load Dataset"':
+          data:
+            datasetId: JC_gUcHp-3h15unEQUzlM
+          outgoingConnections:
+            - dataset->"Prompt" lpS8G4oZfbQtE1oJkpfV7/input
+          visualData: 296.63269145032143/732.5650253287627/280/91
+        '[_48waq6f0i-p-WKfX9Ilx]:assemblePrompt "Assemble Prompt"':
+          outgoingConnections:
+            - prompt->"Chat" THpmo2BsdOfS05Gi3f9KL/systemPrompt
+          visualData: 1161.246055554362/530.6678056264121/280/88
+        '[fNHSOuwkRHUR8kMBa5IHN]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: "Great the customer\r
+
+              Introduce your name only\r
+
+              Ask how can you address the customer"
+            type: system
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Chat" THpmo2BsdOfS05Gi3f9KL/prompt
+          visualData: 558.7879417309036/457.84384451328305/280/93
+        '[hzZQzbDgasGkfIp1QHYgG]:graphOutput "Graph Output"':
+          data:
+            dataType: string
+            id: History
+          visualData: 2553.4954984138158/320.4091217751163/330/90
+        '[lpS8G4oZfbQtE1oJkpfV7]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: "This is the dataset on delivery information.\r
+
+              Each row represents one unique customer\r
+
+              {{input}}\r\n"
+            type: system
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Assemble Prompt" _48waq6f0i-p-WKfX9Ilx/message2
+          visualData: 819.7682680977633/752.2428726613343/280/92
+    SMe-E6cjsLDrrU99pEojM:
+      metadata:
+        description: ""
+        id: SMe-E6cjsLDrrU99pEojM
+        name: Main Flow
+      nodes:
+        '[AZPGTaoEosNOOJ949Biww]:graphOutput "Graph Output"':
+          data:
+            dataType: string
+            id: output
+          visualData: 1387.8923298350376/122.83896778569921/330/22
+        '[FO3JRN-xaQ0UjMcHmPzw9]:loopController "Loop Controller"':
+          data:
+            maxIterations: 100
+          outgoingConnections:
+            - break->"Graph Output" AZPGTaoEosNOOJ949Biww/value
+            - output1->"Subgraph" WpDFsuJKh8z48S9H_TOVP/History
+          visualData: 770.7193876430545/157.06612267599485/280/29
+        '[WMAwe0iMlBJ7guuet5pOo]:subGraph "Subgraph"':
+          data:
+            graphId: 3j0jb5q7wEL7JRk6wxZP1
+            useAsGraphPartialOutput: false
+            useErrorOutput: false
+          outgoingConnections:
+            - History->"Loop Controller" FO3JRN-xaQ0UjMcHmPzw9/input1Default
+          visualData: 230.2257566625263/189.36515786375574/330/35
+        '[WpDFsuJKh8z48S9H_TOVP]:subGraph "Subgraph"':
+          data:
+            graphId: gvh_4viC-DIBOx6qePJtE
+            useAsGraphPartialOutput: false
+            useErrorOutput: false
+          outgoingConnections:
+            - prompt->"Loop Controller" FO3JRN-xaQ0UjMcHmPzw9/input1
+          visualData: 746.7218069767287/-124.08297592183808/330/36
+    gvh_4viC-DIBOx6qePJtE:
+      metadata:
+        description: ""
+        id: gvh_4viC-DIBOx6qePJtE
+        name: Chat Loop
+      nodes:
+        '[2DDhOaoS6puf6_nX4JKZO]:chat "Chat"':
+          data:
+            cache: false
+            enableFunctionUse: false
+            endpoint: ""
+            frequencyPenalty: 1.1
+            maxTokens: 1024
+            model: gpt-3.5-turbo
+            overrideModel: ""
+            presencePenalty: 0
+            stop: ""
+            temperature: 0.5
+            top_p: 1
+            useAsGraphPartialOutput: true
+            useFrequencyPenaltyInput: false
+            useMaxTokensInput: false
+            useModelInput: false
+            usePresencePenaltyInput: false
+            useStop: false
+            useStopInput: false
+            useTemperatureInput: false
+            useTopP: false
+            useTopPInput: false
+            useUseTopPInput: false
+            useUserInput: false
+          outgoingConnections:
+            - response->"Prompt" WZdHMONeZA0pKcazdqTGD/input
+            - response->"User Input" RoHzaM_OnSnqv_LZUWlGS/questions
+          visualData: 1156.2010939893653/-267.9419915335197/230/67
+        '[RWENlul0RNXzONOCGO5LC]:assemblePrompt "Assemble Prompt"':
+          visualData: 767.2576941387463/-445.75488348760877/280/77
+        '[RoHzaM_OnSnqv_LZUWlGS]:userInput "User Input"':
+          data:
+            prompt: ""
+            useInput: true
+          outgoingConnections:
+            - output->"Assemble Prompt" TQs5IyjXNfHyiTpSPiruc/message2
+          visualData: 1671.3663054279289/-137.26282357926348/280/85
+        '[SUAcgyRJ81ohGqSRgLezM]:graphInput "Graph Input"':
+          data:
+            dataType: string
+            id: dataoutput
+            useDefaultValueInput: false
+          visualData: 221.09906620304918/-568.735166329803/330/79
+        '[TQs5IyjXNfHyiTpSPiruc]:assemblePrompt "Assemble Prompt"':
+          outgoingConnections:
+            - prompt->"Graph Output" imndOw5O_jOvPhQgQFQ-7/value
+          visualData: 2173.0382699740617/27.72259651251889/280/60
+        '[WZdHMONeZA0pKcazdqTGD]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: "{{input}}"
+            type: assistant
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Assemble Prompt" TQs5IyjXNfHyiTpSPiruc/message1
+          visualData: 1668.2794355709054/-452.8148814935827/280/84
+        '[imndOw5O_jOvPhQgQFQ-7]:graphOutput "Graph Output"':
+          data:
+            dataType: chat-message
+            id: prompt
+          visualData: 2782.3109512597916/-4.512291602545957/330/87
+        '[pa9y4buTEWOIWb7Z_Qnlm]:graphInput "Graph Input"':
+          data:
+            dataType: string
+            id: History
+            useDefaultValueInput: false
+          outgoingConnections:
+            - data->"Assemble Prompt" TQs5IyjXNfHyiTpSPiruc/message3
+            - data->"Chat" 2DDhOaoS6puf6_nX4JKZO/prompt
+          visualData: 216.5868651332168/-325.5546816331403/330/78
+        '[ufU1ih3n56vQHhNCSq59G]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: "Your name is Ah Fu\r
+
+              First ask Customer for their name \r
+
+              Then ask customer for information to check for their
+              delivery\r
+
+              When Customer give order number\r
+
+              Check Order Number with dataset\r
+
+              Name given and tracking number must match to give
+              results"
+            type: system
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Assemble Prompt" TQs5IyjXNfHyiTpSPiruc/message4
+          visualData: 1548.7840639964493/161.06587804035186/280/86
+        '[yyVEgWCRoI5Cn5-hXmzWV]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: "Singapore Timezone is GMT +8\r
+
+              You are the delivery company customer service\r
+
+              Your name is Ah Fu\r
+
+              First ask Customer for their name \r
+
+              Then ask customer for information to check for their
+              delivery"
+            type: system
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Chat" 2DDhOaoS6puf6_nX4JKZO/systemPrompt
+          visualData: 219.36505963207708/-53.132725029884334/280/82
+    kdqaorYCHJMCX2PqZYdlF:
+      metadata:
+        description: ""
+        id: kdqaorYCHJMCX2PqZYdlF
+        name: Data Verification
+      nodes:
+        '[CmtNTMCQwuChZ1RB34DmX]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: Retrieve data from data set and match before giving results
+            type: system
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Chat" c5EVttCUHF-dwA0OjVPCB/systemPrompt
+          visualData: 407.9202730606248/-46.862322567246046/280/15
+        '[EYKDjV0wDudS8mYUIjnc4]:graphOutput "Graph Output"':
+          data:
+            dataType: string
+            id: output
+          visualData: 1606.6666870117188/-13.000007629394531/330/14
+        '[Vm5F_10oRv6r5gGij8jtL]:match "Match"':
+          data:
+            caseCount: 2
+            cases:
+              - YES
+              - NO
+          outgoingConnections:
+            - case1->"Graph Output" EYKDjV0wDudS8mYUIjnc4/value
+          visualData: 1219.6666870117188/61.333343505859375/280/10
+        '[c5EVttCUHF-dwA0OjVPCB]:chat "Chat"':
+          data:
+            cache: false
+            enableFunctionUse: false
+            frequencyPenalty: 0
+            maxTokens: 1024
+            model: gpt-3.5-turbo
+            presencePenalty: 0
+            stop: ""
+            temperature: 0.5
+            top_p: 1
+            useAsGraphPartialOutput: true
+            useFrequencyPenaltyInput: false
+            useMaxTokensInput: false
+            useModelInput: false
+            usePresencePenaltyInput: false
+            useStop: false
+            useStopInput: false
+            useTemperatureInput: false
+            useTopP: false
+            useTopPInput: false
+            useUseTopPInput: false
+            useUserInput: false
+          outgoingConnections:
+            - response->"Match" Vm5F_10oRv6r5gGij8jtL/value
+          visualData: 856.3333129882812/87.33332824707031/230/7
+        '[pwOaXD2YLVpuYsSVEpO8g]:loadDataset "Load Dataset"':
+          data:
+            datasetId: JC_gUcHp-3h15unEQUzlM
+          outgoingConnections:
+            - dataset->"Chat" c5EVttCUHF-dwA0OjVPCB/prompt
+          visualData: 404/148/280/null
+    nhkUsuAoQhpMfERpdaun-:
+      metadata:
+        description: ""
+        id: nhkUsuAoQhpMfERpdaun-
+        name: Data Retrival
+      nodes:
+        '[0dcdrGLUz3OtDGpTOROcY]:text "Text"':
+          data:
+            text: "{{input}}"
+          outgoingConnections:
+            - output->"Graph Output" OqoU9AYUWmQqHi7tzHL0L/value
+          visualData: 1419.623995458866/-76.25430916865378/330/33
+        '[1Oc0N2MswVZGt8GhtNG8s]:chat "Chat"':
+          data:
+            cache: false
+            enableFunctionUse: false
+            endpoint: ""
+            frequencyPenalty: 0
+            maxTokens: 1024
+            model: gpt-3.5-turbo
+            overrideModel: ""
+            presencePenalty: 0
+            stop: ""
+            temperature: 0.5
+            top_p: 1
+            useAsGraphPartialOutput: true
+            useFrequencyPenaltyInput: false
+            useMaxTokensInput: false
+            useModelInput: false
+            usePresencePenaltyInput: false
+            useStop: false
+            useStopInput: false
+            useTemperatureInput: false
+            useTopP: false
+            useTopPInput: false
+            useUseTopPInput: false
+            useUserInput: false
+          outgoingConnections:
+            - response->"Text" 0dcdrGLUz3OtDGpTOROcY/input
+          visualData: 1044.6600320886496/-116.61487464230663/230/32
+        '[1WwNIAu-MOtDURtYPG6qe]:extractRegex "Extract Regex"':
+          data:
+            errorOnFailed: false
+            regex: $.metadata.text
+            useRegexInput: false
+          outgoingConnections:
+            - matches->"Text" y1nxLNhMv7_2AOeLning0/data
+          visualData: 883.1562600441413/284.30369909733116/280/29
+        '[1oNjU_9Z_HZA03Q_00uGU]:prompt "Prompt"':
+          data:
+            enableFunctionCall: false
+            promptText: "Do not give full information\r
+
+              Ask for name and handphone number for verification\r
+
+              only give delivery status\r
+
+              delivered or not delivered "
+            type: user
+            useTypeInput: false
+          outgoingConnections:
+            - output->"Chat" 1Oc0N2MswVZGt8GhtNG8s/systemPrompt
+          visualData: 456.29789301749355/-159.68743646715268/280/9
+        '[IJ6MXvGa2Dqc4-2sz86y0]:datasetNearestNeighbors "KNN Dataset"':
+          data:
+            datasetId: JC_gUcHp-3h15unEQUzlM
+            k: 5
+          outgoingConnections:
+            - nearestNeighbors->"Extract Object Path"
+              bQ_vfAlMJBAE9iTADm2f5/object
+          visualData: 57.038082104970044/269.6251120873272/280/20
+        '[OqoU9AYUWmQqHi7tzHL0L]:graphOutput "Graph Output"':
+          data:
+            dataType: string
+            id: Dataoutput
+          visualData: 2059.5250733832763/-94.03469069053364/330/37
+        '[Q0y67uxeg2G4B6AOs9aEq]:array "Array"':
+          data:
+            flatten: true
+            flattenDeep: false
+          outgoingConnections:
+            - output->"Get Embedding" gYoxkymfZyHrzvo9mmc5J/input
+          visualData: -709.4590492470544/341.37781037603276/230/60
+        '[Y5IxfacB8uo_3vihmaVs5]:graphInput "Graph Input"':
+          data:
+            dataType: string
+            id: History
+            useDefaultValueInput: false
+          outgoingConnections:
+            - data->"Array" Q0y67uxeg2G4B6AOs9aEq/input1
+          visualData: -1214.1950627449476/142.17590618675493/330/62
+        '[bQ_vfAlMJBAE9iTADm2f5]:extractObjectPath "Extract Object Path"':
+          data:
+            path: ${*}
+            usePathInput: false
+          outgoingConnections:
+            - all_matches->"Extract Regex" 1WwNIAu-MOtDURtYPG6qe/input
+          visualData: 463.0543521934487/285.2611369444563/280/40
+        '[gYoxkymfZyHrzvo9mmc5J]:getEmbedding "Get Embedding"':
+          data:
+            integration: openai
+            useIntegrationInput: false
+          outgoingConnections:
+            - embedding->"KNN Dataset" IJ6MXvGa2Dqc4-2sz86y0/embedding
+          visualData: -347.03518804725076/274.337381932373/230/45
+        '[vKeEapYTZaa_iM5Fbx-kV]:loadDataset "Load Dataset"':
+          data:
+            datasetId: JC_gUcHp-3h15unEQUzlM
+          outgoingConnections:
+            - dataset->"Array" Q0y67uxeg2G4B6AOs9aEq/input2
+          visualData: -1190.9937173821952/390.0625560671101/280/59
+        '[y1nxLNhMv7_2AOeLning0]:text "Text"':
+          data:
+            text: "{{data}}"
+          visualData: 1386.5807346491856/287.0562689501262/330/41
+  metadata:
+    description: ""
+    id: 54fbzCgSuoDurZp1qfUx_
+    title: Huper Test Project
+  plugins: []
